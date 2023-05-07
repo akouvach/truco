@@ -1,1 +1,1 @@
-# truco
+# Truco v1.0
