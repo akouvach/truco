@@ -50,7 +50,6 @@ void main(List<String> arguments) {
         valor_jug2=Busqueda(vec_carta,vec_valor,jugadores[cont1][j]);
       }
 
-
       if(valor_jug2<valor_jug1)
       {
         print("Gano jugador 1");
@@ -75,15 +74,15 @@ void main(List<String> arguments) {
   
 }
 
-int Busqueda( var VC[], var VV[], var x)
+int Busqueda( var vc[], var vv[], var x)
 {
   int val=-1,i=0;
 
-  while(val==-1&&i<VC.length)
+  while(val==-1&&i<vc.length)
 {
-  if(VC[i]==x)
+  if(vc[i]==x)
   {
-    val=VV[i];
+    val=vv[i];
 
   }
    else
@@ -99,7 +98,7 @@ return val;
 
 
 }
-*/
+
 
 
 
