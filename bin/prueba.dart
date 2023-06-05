@@ -8,11 +8,12 @@ import 'dart:io';
 
 void main(List<String> arguments) {
   
-  int i,cont=0,j,cont1=0,maxvalor,num_jug,vof;
+  int i,cont,j,cont1=0,maxvalor,num_jug,vof;
   var vec_valor=[40,39,38,37,36,36,36,36,32,32,32,32,28,28,26,26,26,26,22,22,22,22,18,18,18,18,14,14,12,12,12,12,8,8,8,8,4,4,4,4];
   var vec_carta=["1 de espada","1 de basto","7 de espada","7 de oro","3 de espada","3 de oro","3 de basto","3 de copa","2 de copa","2 de basto","2 de espada","2 de oro","1 de copa","1 de oro","12 de copa","12 de espada","12 de oro","12 de basto","11 de basto","11 de oro","11 de espada","11 de copa","10 de copa","10 de basto","10 de oro","10 de espada","7 de basto","7 de copa","6 de oro","6 de copa","6 de espada","6 de basto","5 de espada","5 de oro","5 de basto","5 de copa","4 de copa","4 de basto","4 de oro","4 de espada"];
   var vec_mazo=["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"];
   var vec_jug1=["0","0","0"];
+  var jugadas=[[0,0,0],[0,0,0],[0,0,0]];
   var vec_jug2=["0","0","0"];
   var jugadores=[["0","0","0"],["0","0","0"],["0","0","0"],["0","0","0"],["0","0","0"],["0","0","0"]];
   var valor_jug1,valor_jug2;
@@ -33,8 +34,8 @@ void main(List<String> arguments) {
   {
     for(i=0;i<jugadores.length;i++)
     {
-      jugadores[i][j]=vec_mazo[cont];
-      cont++;
+      jugadores[i][j]=vec_mazo[cont1];
+      cont1++;
     }
 
   }
@@ -44,6 +45,7 @@ void main(List<String> arguments) {
   print(jugadores);
   for(i=0;i<3;i++)
   {
+    cont=0;
     maxvalor=0;
     num_jug=-1;
 
@@ -54,26 +56,40 @@ void main(List<String> arguments) {
         if(valor_jug1>maxvalor)
         {
           maxvalor=valor_jug1;
-          num_jug=j+1;
+          num_jug=j;
           vof=Espar(num_jug);
           if(vof==1)
           {
-            
+            jugadas[cont][0]=maxvalor;
+            jugadas[cont][1]=1;//Equipo 1
+            jugadas[cont][2]=num_jug;
+            cont++;
+          }
+          else
+          {
+            jugadas[cont][0]=maxvalor;
+            jugadas[cont][1]=2;//Equipo 2
+            jugadas[cont][2]=num_jug;
+            cont++;
+
           }
         }
         else
         {
-          if(valor_jug1==maxvalor)//Se define en la otra ronda
+          vof=Espar(num_jug);
+          if(valor_jug1==maxvalor&&vof==0)
           {
-            break;//Para que saltee a la otra
+            break;//Se define en la otra ronda
           }
         }
 
       }
       
-        print("El ganador de la ronda $i es el equipo $num_jug con valor $maxvalor");
+        //print("El ganador de la ronda $i es el equipo $num_jug con valor $maxvalor");
 
   }
+
+  print(jugadas);
 
   //armar los equipos (par e impar)
   //fijarse cuando hay empate(se define en la otra ronda)
@@ -117,6 +133,10 @@ int Espar(int num)
     return 0;
   }
 }
+
+
+
+
 
 
 
