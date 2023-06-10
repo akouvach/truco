@@ -4,7 +4,7 @@ import 'package:prueba/prueba.dart' as prueba;
 import 'dart:io';
 
 void main(List<String> arguments) {
-  int i, cont, j, cont1 = 0, maxvalor, num_jug, vof;
+  int i, cont, j, cont1 = 0, maxvalor, num_jug, vof,cont_equip1=0,cont_equip2=0;
   var vec_valor = [
     40,
     39,
@@ -133,7 +133,7 @@ void main(List<String> arguments) {
   ];
   var vec_jug1 = ["0", "0", "0"];
 
-  /* este vector jugadas se utiliza para almacenar algunos vaores
+  /* este vector jugadas se utiliza para almacenar algunos valores
   el primero es el máximo valor
   el segundo es el equipo al que pertenece el máximo (1, los pares, 2 los impares). Si es cero, será un empate
   el tercero es el jugador maximo .  Será -1 si es un empate.*/
@@ -207,17 +207,45 @@ void main(List<String> arguments) {
         }
       }
     }
+    if(cont_equip2!=2&&cont_equip1!=2)
+    {
+      switch(jugadas[i][1])
+      {
+        case 1:
+        cont_equip1++;
+        break;
 
-    //print("El ganador de la ronda $i es el equipo $num_jug con valor $maxvalor");
+        case 2:
+        cont_equip2++;
+        break;
+      }
+
+    }else
+    {
+      if(cont_equip2<cont_equip1)
+      {
+        print("Gano equipo 1");
+      }
+      else
+      {
+        print("Gano equipo 2");
+      }
+    }
+   
+
+    
   }
 
   for (int i = 0; i < jugadas.length; i++) {
     print("jugada :$i ${jugadas[i]}");
   }
 
-  //armar los equipos (par e impar)
-  //fijarse cuando hay empate(se define en la otra ronda)
-  // si llega a dos rondas ganadas, se corta
+  //Se recorre el vector de jugadas y se determina que equipo es el ganador
+    //print("$cont_equip1,$cont_equip2");
+  
+  
+
+  
 }
 
 int Busqueda(List<String> vc, List<int> vv, String x) {
