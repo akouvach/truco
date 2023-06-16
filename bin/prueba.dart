@@ -4,7 +4,17 @@ import 'package:prueba/prueba.dart' as prueba;
 import 'dart:io';
 
 void main(List<String> arguments) {
-  int i, cont, j, cont1 = 0, maxvalor, num_jug, vof,cont_equip1=0,cont_equip2=0,acum_equip1=0,acum_equip2=0;
+  int i,
+      cont,
+      j,
+      cont1 = 0,
+      maxvalor,
+      num_jug,
+      vof,
+      cont_equip1 = 0,
+      cont_equip2 = 0,
+      acum_equip1 = 0,
+      acum_equip2 = 0;
   var vec_valor = [
     40,
     39,
@@ -163,104 +173,88 @@ void main(List<String> arguments) {
   }
   //Mientras los puntajes sean menores a 30,siguen las rondas
 
-  while(acum_equip1<30 && acum_equip2<30)
-  { 
-    print("--------------------------------------------------------------------------------");
-    vec_mazo.shuffle();//Mezclo
+  while (acum_equip1 < 30 && acum_equip2 < 30) {
+    print(
+        "--------------------------------------------------------------------------------");
+    vec_mazo.shuffle(); //Mezclo
 
-    cont1=0;
+    cont1 = 0;
+    cont_equip2 = 0;
+    cont_equip1 = 0;
 
-//Asigno tres cartas a cada jugador
-  for (j = 0; j < 3; j++) {
-    for (i = 0; i < jugadores.length; i++) {
-      jugadores[i][j] = vec_mazo[cont1];
-      cont1++;
+    //Asigno tres cartas a cada jugador
+    for (j = 0; j < 3; j++) {
+      for (i = 0; i < jugadores.length; i++) {
+        jugadores[i][j] = vec_mazo[cont1];
+        cont1++;
+      }
     }
-  }
 
-  /* veo los jugadores cómo fueron asignados */
-  print("Asignación de jugadores:\n-----------------------");
-  for (int i = 0; i < jugadores.length; i++) {
-    print("$i: ${jugadores[i]}");
-  }
+    /* veo los jugadores cómo fueron asignados */
+    print("Asignación de jugadores:\n-----------------------");
+    for (int i = 0; i < jugadores.length; i++) {
+      print("$i: ${jugadores[i]}");
+    }
 
-  //Se comparan los valores para saber quien gano
-  for (i = 0; i < 3; i++) {
-    maxvalor = 0;
-    num_jug = -1;
+    //Se comparan los valores para saber quien gano
 
-    for (j = 0; j < jugadores.length; j++) {
-      /* obtengo el valor de la carga del jugador */
-      valor_carta = Busqueda(vec_carta, vec_valor, jugadores[j][i]);
-      vof = Equipo(j);
+    for (i = 0; i < 3; i++) {
+      maxvalor = 0;
+      num_jug = -1;
 
-      if (valor_carta > maxvalor) {
-        /* reemplazo al máximo hasta ahora */
-        maxvalor = valor_carta;
-        num_jug = j;
-        /* utilizo la funcion Equipo para saber a qué equipo corresponde */
+      for (j = 0; j < jugadores.length; j++) {
+        /* obtengo el valor de la carga del jugador */
+        valor_carta = Busqueda(vec_carta, vec_valor, jugadores[j][i]);
+        vof = Equipo(j);
 
-        jugadas[i][0] = maxvalor;
-        jugadas[i][1] = vof;
-        jugadas[i][2] = num_jug;
-      } else {
-        /* si la carta es la misma, y el equipo es el mismo.. entonces nada cambia
+        if (valor_carta > maxvalor) {
+          /* reemplazo al máximo hasta ahora */
+          maxvalor = valor_carta;
+          num_jug = j;
+          /* utilizo la funcion Equipo para saber a qué equipo corresponde */
+
+          jugadas[i][0] = maxvalor;
+          jugadas[i][1] = vof;
+          jugadas[i][2] = num_jug;
+        } else {
+          /* si la carta es la misma, y el equipo es el mismo.. entonces nada cambia
         Si la carta es la misma y el anterior máximo es distinto.. ahora hay empate 
         y por lo tanto vamos a cambiar el grupo y  máximo jugador */
-        if (valor_carta == maxvalor && vof != jugadas[i][1]) {
-          /* como el anterior máximo y este pertenecen a distintos equipos, hay que 
+          if (valor_carta == maxvalor && vof != jugadas[i][1]) {
+            /* como el anterior máximo y este pertenecen a distintos equipos, hay que 
           cambiar el registro por los datos del empate*/
-          jugadas[i][1] =
-              0; // le pongo 0 para saber que es un empate, esta ronda, hasta ahora...
+            jugadas[i][1] =
+                0; // le pongo 0 para saber que es un empate, esta ronda, hasta ahora...
+          }
+        }
+      }
+
+      if (cont_equip2 < 2 && cont_equip1 < 2) {
+        switch (jugadas[i][1]) {
+          case 1:
+            cont_equip1++;
+            break;
+
+          case 2:
+            cont_equip2++;
+            break;
+        }
+      } else {
+        if (cont_equip2 < cont_equip1) {
+          acum_equip1 += 2;
+          print("Gano equipo 1");
+        } else {
+          acum_equip2 += 2;
+          print("Gano equipo 2");
         }
       }
     }
-    if(cont_equip2<2 && cont_equip1<2)
-    {
-      switch(jugadas[i][1])
-      {
-        case 1:
-        cont_equip1++;
-        break;
-
-        case 2:
-        cont_equip2++;
-        break;
-      }
-
-    }else
-    {
-      if(cont_equip2<cont_equip1)
-      {
-        acum_equip1+=2;
-        print("Gano equipo 1");
-      }
-      else
-      {
-        acum_equip2+=2;
-        print("Gano equipo 2");
-      }
+    for (int i = 0; i < jugadas.length; i++) {
+      print("jugada :$i ${jugadas[i]}");
     }
 
-     
-  
+    print("Puntaje equipo 1 $acum_equip1\tPuntaje equipo 2 $acum_equip2");
   }
-  for (int i = 0; i < jugadas.length; i++) {
-    print("jugada :$i ${jugadas[i]}");
-  }
-
-  print("Puntaje equipo 1 $acum_equip1\tPuntaje equipo 2 $acum_equip2");
-
-}
-
-
-
-
-  
-  
-  
-
-  
 }
 
 int Busqueda(List<String> vc, List<int> vv, String x) {
