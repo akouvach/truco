@@ -4,7 +4,7 @@ import 'package:prueba/prueba.dart' as prueba;
 import 'dart:io';
 
 void main(List<String> arguments) {
-  int i, cont, j, cont1 = 0, maxvalor, num_jug, vof,cont_equip1=0,cont_equip2=0;
+  int i, cont, j, cont1 = 0, maxvalor, num_jug, vof,cont_equip1=0,cont_equip2=0,acum_equip1=0,acum_equip2=0;
   var vec_valor = [
     40,
     39,
@@ -157,11 +157,18 @@ void main(List<String> arguments) {
   var nombre = stdin.readLineSync();
   print("Bienvenido $nombre");
 
-/* Cargo las cartas en el vector vec_mazo y las mezclo */
+/* Cargo las cartas en el vector vec_mazo*/
   for (i = 0; i < 40; i++) {
     vec_mazo[i] = vec_carta[i];
   }
-  vec_mazo.shuffle();
+  //Mientras los puntajes sean menores a 30,siguen las rondas
+
+  while(acum_equip1<30 && acum_equip2<30)
+  { 
+    print("--------------------------------------------------------------------------------");
+    vec_mazo.shuffle();//Mezclo
+
+    cont1=0;
 
 //Asigno tres cartas a cada jugador
   for (j = 0; j < 3; j++) {
@@ -185,13 +192,14 @@ void main(List<String> arguments) {
     for (j = 0; j < jugadores.length; j++) {
       /* obtengo el valor de la carga del jugador */
       valor_carta = Busqueda(vec_carta, vec_valor, jugadores[j][i]);
-      vof = Equipo(num_jug);
+      vof = Equipo(j);
 
       if (valor_carta > maxvalor) {
         /* reemplazo al máximo hasta ahora */
         maxvalor = valor_carta;
         num_jug = j;
         /* utilizo la funcion Equipo para saber a qué equipo corresponde */
+
         jugadas[i][0] = maxvalor;
         jugadas[i][1] = vof;
         jugadas[i][2] = num_jug;
@@ -207,7 +215,7 @@ void main(List<String> arguments) {
         }
       }
     }
-    if(cont_equip2!=2&&cont_equip1!=2)
+    if(cont_equip2<2 && cont_equip1<2)
     {
       switch(jugadas[i][1])
       {
@@ -224,24 +232,31 @@ void main(List<String> arguments) {
     {
       if(cont_equip2<cont_equip1)
       {
+        acum_equip1+=2;
         print("Gano equipo 1");
       }
       else
       {
+        acum_equip2+=2;
         print("Gano equipo 2");
       }
     }
-   
 
-    
+     
+  
   }
-
   for (int i = 0; i < jugadas.length; i++) {
     print("jugada :$i ${jugadas[i]}");
   }
 
-  //Se recorre el vector de jugadas y se determina que equipo es el ganador
-    //print("$cont_equip1,$cont_equip2");
+  print("Puntaje equipo 1 $acum_equip1\tPuntaje equipo 2 $acum_equip2");
+
+}
+
+
+
+
+  
   
   
 
