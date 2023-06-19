@@ -154,14 +154,14 @@ void main(List<String> arguments) {
   ];
   var vec_jug2 = ["0", "0", "0"];
   var jugadores = [
-    ["0", "0", "0"],
-    ["0", "0", "0"],
-    ["0", "0", "0"],
-    ["0", "0", "0"],
-    ["0", "0", "0"],
-    ["0", "0", "0"]
+    [["0",false],["0",false], ["0",false]],
+    [["0",false],["0",false], ["0",false]],
+    [["0",false],["0",false], ["0",false]],
+    [["0",false],["0",false], ["0",false]],
+    [["0",false],["0",false], ["0",false]],
+    [["0",false],["0",false], ["0",false]],
   ];
-  int valor_carta;
+  int valor_carta,num_carta;
   print("Bienvenido");
   print("Ingrese el nombre del jugador: ");
   var nombre = stdin.readLineSync();
@@ -183,9 +183,9 @@ void main(List<String> arguments) {
     cont_equip1 = 0;
 
     //Asigno tres cartas a cada jugador
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 4; j++) {
       for (i = 0; i < jugadores.length; i++) {
-        jugadores[i][j] = vec_mazo[cont1];
+        jugadores[i][j][0] = vec_mazo[cont1];
         cont1++;
       }
     }
@@ -198,11 +198,14 @@ void main(List<String> arguments) {
 
     //Se comparan los valores para saber quien gano
 
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 4; i++) {
       maxvalor = 0;
       num_jug = -1;
 
       for (j = 0; j < jugadores.length; j++) {
+
+       num_carta=ElegirCarta(j); 
+
         /* obtengo el valor de la carga del jugador */
         valor_carta = Busqueda(vec_carta, vec_valor, jugadores[j][i]);
         vof = Equipo(j);
@@ -278,3 +281,53 @@ int Equipo(int num) {
     return 2;
   }
 }
+
+int ElegirCarta(var vec)
+{
+  int i,j,num_carta;
+
+    for(i=0;i<vec.length;i++)
+    {
+      int cont=0;
+      for(j=0;j<4;j++)
+      {
+        print("Eliga el numero de carta que quiera:");
+         num_carta = stdin.readLineSync();
+
+         if(vec[i][num_carta-1]!=-1)
+         { 
+
+            switch(num_carta)
+            {
+
+            case 1:
+            vec[i][num_carta-1]=-1;
+            break;
+          
+            case 2:
+            vec[i][num_carta-1]=-1; 
+            break;
+
+            case 3:
+            vec[i][num_carta-1]=-1;
+            break;
+
+            }
+
+        }else
+        {
+          print("Ya eligio esa carta");
+
+        }
+
+        
+      }
+    }
+
+
+}
+
+
+
+
+
